@@ -55,7 +55,84 @@
 </head>
 
 <body>
+  
+
+  <!-- Notificaciones push firebase -->
+
+  <p id="token"></p>
   <div id="preloader"></div>
+  <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-messaging.js"></script>
+  <script>
+    var firebaseConfig = {
+    apiKey: "AIzaSyAnDYjB6nl-IXUVyuI97n00VTO70jWYH14",
+    authDomain: "deft-observer-249301.firebaseapp.com",
+    projectId: "deft-observer-249301",
+    storageBucket: "deft-observer-249301.appspot.com",
+    messagingSenderId: "581706997035",
+    appId: "1:581706997035:web:eb0b8450ef67e343b8396e",
+    measurementId: "G-F6Z8E2XYQ1"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const messaging=firebase.messaging();
+
+    function IntitalizeFireBaseMessaging() {
+        messaging
+            .requestPermission()
+            .then(function () {
+                console.log("Notification Permission");
+                return messaging.getToken();
+            })
+            .then(function (token) {
+                console.log("Token : "+token);
+                document.getElementById("token").innerHTML=token;
+            })
+            .catch(function (reason) {
+                console.log(reason);
+            });
+    }
+
+            // Handle incoming messages. Called when:
+        // - a message is received while the app has focus
+        // - the user clicks on an app notification created by a service worker
+        //   `messaging.onBackgroundMessage` handler.
+        messaging.onMessage((payload) => {
+        console.log('Message received. ', payload);
+        // ...
+        });
+
+    messaging.onMessage(function (payload) {
+        console.log(payload);
+        const notificationOption={
+            body:payload.notification.body,
+            //icon:payload.notification.icon
+        };
+
+        if(Notification.permission==="granted"){
+            var notification=new Notification(payload.notification.title,notificationOption);
+
+            notification.onclick=function (ev) {
+                ev.preventDefault();
+                window.open(payload.notification.click_action,'_blank');
+                    notification.close();
+            }
+        }
+
+    });
+    messaging.onTokenRefresh(function () {
+        messaging.getToken()
+            .then(function (newtoken) {
+                console.log("New Token : "+ newtoken);
+            })
+            .catch(function (reason) {
+                console.log(reason);
+            })
+    })
+    IntitalizeFireBaseMessaging();
+</script>
+
+<!-- Notificaciones push firebase -->
+
 
   <!--==========================
   Hero Section
