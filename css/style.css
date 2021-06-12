@@ -93,7 +93,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #hero .hero-container {
-  background: rgb(0 0 0 / 79%);
+  background: rgb(0 0 0 / 55%);
   display: table-cell;
   margin: 0;
   padding: 0;
@@ -150,8 +150,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #hero .btn-get-started {
-  background: #03C4EB;
-  border: 2px solid #03C4EB;
+  background: #03eb60;
+  border: 2px solid #03eb60;
   color: #fff;
 }
 
